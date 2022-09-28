@@ -1,0 +1,166 @@
+{
+  "_version": "1.40.0",
+  "sap.app": {
+    "id": "authorMaster.library",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "Author Master",
+    "description": "Authors List",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap-ux/fiori-freestyle-writer:basic",
+      "version": "0.11.13",
+      "toolsId": "822c3cd0-6a8b-4c77-aad4-84cff5b98bf3"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/sap/opu/odata/sap/ZOD_MANAGE_LIBRARY_SRV/",
+        "type": "OData",
+        "settings": {
+          "annotations": [
+            "annotation"
+          ],
+          "localUri": "localService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      },
+      "annotation": {
+        "type": "ODataAnnotation",
+        "uri": "annotations/annotation.xml",
+        "settings": {
+          "localUri": "annotations/annotation.xml"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.102.1",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.f": {},
+        "sap.suite.ui.generic.template": {},
+        "sap.ui.comp": {},
+        "sap.ui.generic.app": {},
+        "sap.ui.table": {},
+        "sap.ushell": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "authorMaster.library.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {}
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "config": {
+      "fullWidth": true
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "async": true,
+        "viewPath": "authorMaster.library.view",
+        "controlAggregation": "pages",
+        "controlId": "app"
+      },
+      "routes": [
+        {
+          "name": "Master",
+          "pattern": "",
+          "target": [
+            "Master"
+          ]
+        },
+        {
+          "name": "Info",
+          "pattern": "Info/{Author}",
+          "target": [
+            "Info"
+          ]
+        },
+        {
+          "name": "Create",
+          "pattern": "Create",
+          "target": [
+            "Create"
+          ]
+        },
+        {
+          "name": "Update",
+          "pattern": "Update/{AuthorId}",
+          "target": [
+            "Update"
+          ]
+        }
+      ],
+      "targets": {
+        "Master": {
+          "viewType": "XML",
+          "viewName": "Master",
+          "viewId": "mApp"
+        },
+        "Info": {
+          "viewType": "XML",
+          "viewName": "Info",
+          "viewId": "iInfo"
+        },
+        "Create": {
+          "viewType": "XML",
+          "viewName": "Create",
+          "viewId": "iPageCreate"
+        },
+        "Update": {
+          "viewType": "XML",
+          "viewName": "Update",
+          "viewId": ""
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "authorMaster.library.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "app"
+    }
+  }
+}

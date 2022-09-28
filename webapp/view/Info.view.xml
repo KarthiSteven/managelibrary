@@ -1,0 +1,192 @@
+<mvc:View xmlns:smartfield="sap.ui.comp.smartfield"
+    xmlns:smartform="sap.ui.comp.smartform"
+    xmlns:table="sap.ui.table"
+    xmlns:smartField="sap.ui.comp.smartfield"
+    xmlns="sap.uxap"
+    xmlns:m="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:layout="sap.ui.layout" controllerName="authorMaster.library.controller.Info"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true">
+    <m:App id="iInfo">
+        <m:Page id="iPage" title="Author Information" >
+            <m:content>
+                <ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true">
+                    <headerTitle>
+                        <ObjectPageDynamicHeaderTitle id="ObjectPageDynamicHeaderTitle1">
+                            <expandedHeading>
+                                <m:Title id="Title1" text="{AuthorId} - {AuthorName}"/>
+                            </expandedHeading>
+
+                        </ObjectPageDynamicHeaderTitle>
+                    </headerTitle>
+                    <headerContent>
+                        <m:FlexBox id="iPanel" visible="true">
+                            <m:VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+                                <m:Title text="Profile" class="sapUiTinyMarginBottom">
+
+                                </m:Title>
+                                <m:Text text="{AuthorName}"/>
+
+                            </m:VBox>
+
+                            <m:VBox class="sapUiSmallMarginBottom sapUiLargeMarginEnd">
+                                <m:Title text="Author Rating" class="sapUiTinyMarginBottom" />
+
+                                <m:RatingIndicator value="{Ratings}" iconSize="16px"/>
+                            </m:VBox>
+
+
+                        </m:FlexBox>
+
+                    </headerContent>
+                    <sections>
+                        <ObjectPageSection titleUppercase="false" id="" title="Author's Details">
+                            <subSections>
+                                <ObjectPageSubSection id="iObjectSubPage" titleUppercase="false">
+
+
+                                    <blocks >
+                                        <smartform:SmartForm id="sSimpleForm" title="Details" editable="false">
+                                            <smartform:customToolbar>
+                                                <m:OverflowToolbar id="TB1">
+
+                                                    <m:ToolbarSpacer />
+                                                    <m:Button id="edit" icon="sap-icon://edit" text="Edit" press="onHandleEdit" visible="true"/>
+                                                    <m:Button id="save" icon="sap-icon://save" text="Save" press="onHandleSave" visible="false"/>
+                                                    <m:Button id="cancel" icon="sap-icon://cancel" text="cancel" press="onHandleCancel" visible="false"/>
+                                                    <m:Button id="iDelete" text="Delete Author" icon="sap-icon://delete" press="onHandleDelete" type="Transparent" />
+                                                </m:OverflowToolbar>
+                                            </smartform:customToolbar>
+                                            <smartform:Group title="Author Information">
+                                                <smartform:GroupElement label="Author Name">
+
+                                                    <smartField:SmartField class="sapUiMediumMarginBottom" 
+                                                    id="iAuthor" width="60%" showValueHelp="false" valueState="{State>/AuthorName}" value="{AuthorName}"></smartField:SmartField>
+
+                                                </smartform:GroupElement>
+
+                                                <smartform:GroupElement label="Date of Birth">
+                                                    <smartfield:SmartField id="iDobD" class="sapUiMediumMarginBottom"  value="{path: 'DateOfBirth',
+                                                        type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium'}}" visible="true"></smartfield:SmartField>
+
+                                                </smartform:GroupElement>
+                                                <smartform:GroupElement label="Date of Birth">
+                                                    <m:DatePicker id="iDobE" required="true" visible="false" width="60%"
+                                                     class="sapUiBtnS" valueState="{State>/DateOfBirth}" valueFormat="yyyy-MM-ddTHH:mm:ss" 
+                                                     value="{path: 'DateOfBirth',
+                                                        type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'yyyy-MM-dd',
+                                                    UTC: true}}"/>
+
+                                                </smartform:GroupElement>
+
+                                                <smartform:GroupElement label="Origin">
+
+                                                    <smartField:SmartField class="sapUiMediumMarginBottom" valueState="{State>/Origin}" id="iOrigin" width="60%" value="{Origin}"></smartField:SmartField>
+
+                                                </smartform:GroupElement>
+                                            </smartform:Group>
+                                            <smartform:Group title="Others">
+
+                                                <smartform:GroupElement label="Description">
+                                                    <smartform:elements >
+                                                        <smartField:SmartField class="sapUiBtnS1" id="iDesD" width="120%" maxLength="400" editable="false" visible="true" value="{Description}"></smartField:SmartField>
+                                                    </smartform:elements>
+                                                </smartform:GroupElement>
+                                                <smartform:GroupElement label="Description">
+                                                    <smartform:elements >
+                                                        <m:TextArea id="iDesE" value="{Description}" visible="false" growingMaxLines="5" growing="true" showExceededText="true" maxLength="300" width="100%" valueLiveUpdate="false"></m:TextArea>
+
+                                                    </smartform:elements>
+                                                </smartform:GroupElement>
+
+                                                <smartform:GroupElement label="Rating">
+                                                    <m:RatingIndicator id="iRating" maxValue="5" class="sapUiSmallMarginBottom" editable="false" value="{Ratings}" iconSize="22px" tooltip="Rating Tooltip" />
+                                                </smartform:GroupElement>
+                                            </smartform:Group>
+                                        </smartform:SmartForm>
+                                    </blocks>
+                                </ObjectPageSubSection>
+                            </subSections>
+                        </ObjectPageSection>
+                        <ObjectPageSection titleUppercase="false" id="iSection" title="Author's Books">
+                            <subSections>
+                                <ObjectPageSubSection id="oPageSection" titleUppercase="false">
+                                    <blocks>
+                                        <m:List id="iList" headerText="Author's Books in Libraray" items="{author_to_books}">
+                                            <m:items>
+                                                <m:StandardListItem busyIndicatorDelay="2000" title="{BookName}" />
+                                            </m:items>
+                                        </m:List>
+                                    </blocks>
+                                </ObjectPageSubSection>
+                            </subSections>
+                        </ObjectPageSection>
+                        <ObjectPageSection id="ObjectPageSection1" title="Books List">
+                            <subSections>
+                                <ObjectPageSubSection id="iBooks" title="Books and Copies">
+                                    <blocks>
+                                        <m:Table id="iBooksList" noDataText="No Books Under the Selected Author" headerText="Copies" items="{author_to_copies}" width="auto" contextualWidth="Auto">
+
+                                            <m:columns>
+                                                <m:Column id="Column1" hAlign="Center">
+                                                    <m:Text id="Text3" text="AccessionNumber" width="100%"/>
+                                                </m:Column>
+                                                <m:Column id="Column2" hAlign="Center">
+                                                    <m:Text id="Text4" text="IsbnNumber"/>
+                                                </m:Column>
+                                                <m:Column id="Column3" hAlign="Center">
+                                                    <m:Text id="Text5" text="BookName"/>
+                                                </m:Column>
+                                                <m:Column id="Column4" hAlign="Center">
+                                                    <m:Text id="Text6" text="AuthorId"/>
+                                                </m:Column>
+                                                <m:Column id="Column5" hAlign="Center">
+                                                    <m:Text id="Text7" text="AuthorName"/>
+                                                </m:Column>
+                                                <m:Column id="Column6" hAlign="Center">
+                                                    <m:Text id="Text8" text="Category"/>
+                                                </m:Column>
+                                                <m:Column id="Column7" hAlign="Center">
+                                                    <m:Text id="Text9" text="Publication"/>
+                                                </m:Column>
+                                                <m:Column id="Column8" hAlign="Center">
+                                                    <m:Text id="Text10" text="PublicationDate"/>
+                                                </m:Column>
+                                            </m:columns>
+                                            <m:items>
+                                                <m:ColumnListItem id="ColumnListItem1" vAlign="Middle">
+                                                    <m:cells>
+                                                        <m:Text id="Text11" text="{AccessionNumber}" width="110%"/>
+                                                        <m:Text id="Text12" text="{IsbnNumber}"/>
+                                                        <m:Text id="Text13" text="{BookName}"/>
+                                                        <m:Text id="Text14" text="{AuthorId}"/>
+                                                        <m:Text id="Text15" text="{AuthorName}"/>
+                                                        <m:Text id="Text16" text="{Category}"/>
+                                                        <m:Text id="Text17" text="{Publication}"/>
+                                                        <m:Text id="Text18" text="{PublicationDate}"/>
+                                                    </m:cells>
+                                                </m:ColumnListItem>
+                                            </m:items>
+                                        </m:Table>
+                                    </blocks>
+                                </ObjectPageSubSection>
+                            </subSections>
+                        </ObjectPageSection>
+                    </sections>
+                </ObjectPageLayout>
+            </m:content>
+            <m:footer>
+                <m:Bar id="iBar">
+                    <m:contentRight>
+                        <m:OverflowToolbar id="OverflowToolbar1">
+
+
+                            <m:Button id="iButton" icon="sap-icon://alert" iconDensityAware="true" visible="{=${message>/}.length &gt; 0}" type="Emphasized" press="onMessagePopoverPress"/>
+                        </m:OverflowToolbar>
+                    </m:contentRight>
+                </m:Bar>
+            </m:footer>
+        </m:Page>
+    </m:App>
+</mvc:View>

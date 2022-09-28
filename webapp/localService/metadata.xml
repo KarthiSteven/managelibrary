@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZOD_MANAGE_LIBRARY_SRV" xml:lang="en" sap:schema-version="1 " xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="BooksList" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="IsbnNumber"/>
+                </Key>
+                <Property Name="Copies" Type="Edm.String" Nullable="false" MaxLength="3" sap:label="3-Byte field" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="IsbnNumber" Type="Edm.String" Nullable="false" MaxLength="13" sap:label="ISBN Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="BookName" Type="Edm.String" Nullable="false" MaxLength="50" sap:label="Name of the Book" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AuthorId" Type="Edm.String" MaxLength="5" sap:label="Author Id" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AuthorName" Type="Edm.String" MaxLength="50" sap:label="Author Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Category" Type="Edm.String" MaxLength="20" sap:label="Category" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Publication" Type="Edm.String" MaxLength="30" sap:label="Publication Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PublicationDate" Type="Edm.DateTime" Precision="0" sap:label=" Book Published"/>
+                <NavigationProperty Name="booksItems" Relationship="ZOD_MANAGE_LIBRARY_SRV.booksItems" FromRole="FromRole_booksItems" ToRole="ToRole_booksItems"/>
+            </EntityType>
+            <EntityType Name="BooksCopies" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="AccessionNumber"/>
+                </Key>
+                <Property Name="AccessionNumber" Type="Edm.String" Nullable="false" MaxLength="5" sap:label="Accession Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="copies"          Type="Edm.Int32" Nullable="false" sap:label="Integer" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="IsbnNumber"      Type="Edm.String" Nullable="false" MaxLength="13" sap:label="ISBN Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="BookName"        Type="Edm.String" Nullable="false" MaxLength="50" sap:label="Name of the Book" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AuthorId"        Type="Edm.String" Nullable="false" MaxLength="5" sap:label="Author Id" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AuthorName"       Type="Edm.String" Nullable="false" MaxLength="50" sap:label="Author Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Category"         Type="Edm.String" Nullable="false" MaxLength="20" sap:label="Category" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Publication"      Type="Edm.String" Nullable="false" MaxLength="30" sap:label="Publication Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PublicationDate"  Type="Edm.DateTime" Precision="7" sap:label=" Book Published" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="RentStatus"       Type="Edm.String" Nullable="false" MaxLength="1" sap:label="Rent Status of Book" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="RentNumber"       Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Rented Reference No" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="copies_to_rentInfo" Relationship="ZOD_MANAGE_LIBRARY_SRV.copies_to_rentInfo" FromRole="FromRole_copies_to_rentInfo" ToRole="ToRole_copies_to_rentInfo"/>
+            </EntityType>
+            <EntityType Name="MembersList" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="MemberId"/>
+                </Key>
+                <Property Name="MemberId" Type="Edm.String" Nullable="false" MaxLength="16" sap:label="Member ID Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MemberName" Type="Edm.String" Nullable="false" MaxLength="50" sap:label="Member Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MemberStartDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:label="Start Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MemberEndDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:label="End Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="RenewalDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:label="Renewal Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MembershipStatus" Type="Edm.String" Nullable="false" MaxLength="1" sap:label="Membership Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="list_to_info" Relationship="ZOD_MANAGE_LIBRARY_SRV.list_to_info" FromRole="FromRole_list_to_info" ToRole="ToRole_list_to_info"/>
+            </EntityType>
+            <EntityType Name="RentedInfo" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="RentNumber"/>
+                </Key>
+                <Property Name="AccessionNumber" Type="Edm.String" Nullable="false" MaxLength="5" sap:label="Accession Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="RentNumber" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Rented Reference No" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="IsbnNumber" Type="Edm.String" Nullable="false" MaxLength="13" sap:label="ISBN Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="BookName" Type="Edm.String" Nullable="false" MaxLength="50" sap:label="Name of the Book" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AuthorId" Type="Edm.String" Nullable="false" MaxLength="5" sap:label="Author Id" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AuthorName" Type="Edm.String" Nullable="false" MaxLength="50" sap:label="Author Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MemberId" Type="Edm.String" Nullable="false" MaxLength="16" sap:label="Member ID Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MemberName" Type="Edm.String" Nullable="false" MaxLength="50" sap:label="Member Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="RentedDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:label="Rent date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ReturnDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:label="Return Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Dues" Type="Edm.Decimal" Nullable="false" Precision="17" Scale="4" sap:label="Dues on the Book" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="MemberInfo" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="MemberId"/>
+                </Key>
+                <Property Name="MemberId" Type="Edm.String" Nullable="false" MaxLength="16" sap:label="Member ID Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MemberName" Type="Edm.String" Nullable="false" MaxLength="50" sap:label="Member Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NoBooksOnRent" Type="Edm.String" Nullable="false" MaxLength="1" sap:label="Number of Books" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MemberStartDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:label="Start Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MemberEndDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:label="End Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="RenewalDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:label="Renewal Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MembershipStatus" Type="Edm.String" Nullable="false" MaxLength="1" sap:label="Membership Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TotalDues" Type="Edm.Decimal" Nullable="false" Precision="17" Scale="4" sap:label="Dues" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="Author" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="AuthorId"/>
+                </Key>
+                <Property Name="AuthorId" Type="Edm.String" Nullable="false" MaxLength="5" sap:label="Author Id"       sap:creatable="true" sap:updatable="true" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AuthorName" Type="Edm.String" Nullable="false" MaxLength="50" sap:label="Author Name"  sap:creatable="true" sap:updatable="true" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DateOfBirth" Type="Edm.String" Nullable="false" MaxLength="50" sap:label="Author Name" sap:creatable="true" sap:updatable="true" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="author_to_copies" Relationship="ZOD_MANAGE_LIBRARY_SRV.author_to_copies" FromRole="FromRole_author_to_copies" ToRole="ToRole_author_to_copies"/>
+            </EntityType>
+            <Association Name="copies_to_rentInfo" sap:content-version="1">
+                <End Type="ZOD_MANAGE_LIBRARY_SRV.BooksCopies" Multiplicity="1" Role="FromRole_copies_to_rentInfo"/>
+                <End Type="ZOD_MANAGE_LIBRARY_SRV.RentedInfo" Multiplicity="*" Role="ToRole_copies_to_rentInfo"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_copies_to_rentInfo">
+                        <PropertyRef Name="AccessionNumber"/>
+                    </Principal>
+                    <Dependent Role="ToRole_copies_to_rentInfo">
+                        <PropertyRef Name="AccessionNumber"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="booksItems" sap:content-version="1">
+                <End Type="ZOD_MANAGE_LIBRARY_SRV.BooksList" Multiplicity="1" Role="FromRole_booksItems"/>
+                <End Type="ZOD_MANAGE_LIBRARY_SRV.BooksCopies" Multiplicity="*" Role="ToRole_booksItems"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_booksItems">
+                        <PropertyRef Name="IsbnNumber"/>
+                    </Principal>
+                    <Dependent Role="ToRole_booksItems">
+                        <PropertyRef Name="IsbnNumber"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="author_to_copies" sap:content-version="1">
+                <End Type="ZOD_MANAGE_LIBRARY_SRV.Author" Multiplicity="1" Role="FromRole_author_to_copies"/>
+                <End Type="ZOD_MANAGE_LIBRARY_SRV.BooksCopies" Multiplicity="*" Role="ToRole_author_to_copies"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_author_to_copies">
+                        <PropertyRef Name="AuthorId"/>
+                    </Principal>
+                    <Dependent Role="ToRole_author_to_copies">
+                        <PropertyRef Name="AuthorId"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="list_to_info" sap:content-version="1">
+                <End Type="ZOD_MANAGE_LIBRARY_SRV.MembersList" Multiplicity="1" Role="FromRole_list_to_info"/>
+                <End Type="ZOD_MANAGE_LIBRARY_SRV.MemberInfo" Multiplicity="*" Role="ToRole_list_to_info"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_list_to_info">
+                        <PropertyRef Name="MemberId"/>
+                    </Principal>
+                    <Dependent Role="ToRole_list_to_info">
+                        <PropertyRef Name="MemberId"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <EntityContainer Name="ZOD_MANAGE_LIBRARY_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="BooksCopiesSet" EntityType="ZOD_MANAGE_LIBRARY_SRV.BooksCopies" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="MembersListSet" EntityType="ZOD_MANAGE_LIBRARY_SRV.MembersList" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="RentedInfoSet" EntityType="ZOD_MANAGE_LIBRARY_SRV.RentedInfo" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="MemberInfoSet" EntityType="ZOD_MANAGE_LIBRARY_SRV.MemberInfo" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="AuthorSet" EntityType="ZOD_MANAGE_LIBRARY_SRV.Author" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="BooksListSet" EntityType="ZOD_MANAGE_LIBRARY_SRV.BooksList" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <AssociationSet Name="list_to_infoSet" Association="ZOD_MANAGE_LIBRARY_SRV.list_to_info" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="MembersListSet" Role="FromRole_list_to_info"/>
+                    <End EntitySet="MemberInfoSet" Role="ToRole_list_to_info"/>
+                </AssociationSet>
+                <AssociationSet Name="list_to_copiesSet" Association="ZOD_MANAGE_LIBRARY_SRV.booksItems" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="BooksListSet" Role="FromRole_booksItems"/>
+                    <End EntitySet="BooksCopiesSet" Role="ToRole_booksItems"/>
+                </AssociationSet>
+                <AssociationSet Name="author_to_copiesSet" Association="ZOD_MANAGE_LIBRARY_SRV.author_to_copies" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AuthorSet" Role="FromRole_author_to_copies"/>
+                    <End EntitySet="BooksCopiesSet" Role="ToRole_author_to_copies"/>
+                </AssociationSet>
+                <AssociationSet Name="copies_to_rentInfoSet" Association="ZOD_MANAGE_LIBRARY_SRV.copies_to_rentInfo" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="BooksCopiesSet" Role="FromRole_copies_to_rentInfo"/>
+                    <End EntitySet="RentedInfoSet" Role="ToRole_copies_to_rentInfo"/>
+                </AssociationSet>
+            </EntityContainer>
+            <atom:link rel="self" href="http://35.165.82.157:8000/sap/opu/odata/sap/ZOD_MANAGE_LIBRARY_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="http://35.165.82.157:8000/sap/opu/odata/sap/ZOD_MANAGE_LIBRARY_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

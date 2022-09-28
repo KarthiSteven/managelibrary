@@ -1,0 +1,79 @@
+<mvc:View xmlns:table="sap.ui.table"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:smartField="sap.ui.comp.smartfield"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:layout="sap.ui.layout" controllerName="authorMaster.library.controller.Master"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <App id="mApp">
+        <pages>
+            <Page id="iPage" showHeader="false">
+                <content>
+                    <smartFilterBar:SmartFilterBar id="smartFilterBar" considerSelectionVariants="false" filterBarExpanded="true" persistencyKey="UniqueAndStablePersistencyKey" entitySet="AuthorSet" useToolbar="false">
+
+                    </smartFilterBar:SmartFilterBar>
+                    <smartTable:SmartTable id="iSmartTable" entitySet="AuthorSet"  smartFilterId=
+                    "smartFilterBar" width="100%" direction="Column" alignContent="Start" 
+                    fitContainer="true" header="Author List" tableType="Table" 
+                    enableAutoBinding="true" alignItems="Stretch" showRowCount="true" useExportToExcel="true">
+                        <smartTable:customToolbar>
+                            <OverflowToolbar design="Transparent">
+                                <ToolbarSpacer/>
+                                <Button id="iCreate" text="Add Author" icon="sap-icon://add" type="Emphasized" press="onHandleCreate" />
+                                
+                            </OverflowToolbar>
+                        </smartTable:customToolbar>
+                        <Table sticky="ColumnHeaders,HeaderToolbar" id="iTable"
+                         selectionChange="onPress" mode="SingleSelectMaster" >
+
+                            <columns >
+                                <Column >
+                                    <customData>
+                                        <core:CustomData key="p13nData" value='\{"columnKey": "AuthorId",
+                                      "leadingProperty": "AuthorId", "columnIndex": 0}'/>
+                                    </customData >
+                               
+                                    <Text text="Author ID "></Text>
+                                </Column>
+                                <Column >
+                                    <customData>
+                                        <core:CustomData key="p13nData" value='\{"columnKey": "DateOfBirth",
+                                      "leadingProperty": "DateOfBirth", "columnIndex": 3}'/>
+                                    </customData >
+                                    <Text text="Date of Birth"></Text>
+                                </Column>
+                                <Column >
+                                    <customData>
+                                        <core:CustomData key="p13nData" value='\{"columnKey": "Ratings",
+                                      "leadingProperty": "Ratings", "columnIndex": 5}'/>
+                                    </customData >
+                                    <Text text="Ratings"></Text>
+                                </Column>
+                            </columns>
+                            <items >
+                                <ColumnListItem>
+                                    <ObjectIdentifier title="{path:'AuthorId'}"></ObjectIdentifier>
+                                    <Text text="{path : 'DateOfBirth', type: 'sap.ui.model.type.Date',
+                                formatOptions: { style: 'medium' }}" />
+
+                                    <RatingIndicator value="{path : 'Ratings'}" iconSize="16px"/>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </smartTable:SmartTable>
+                </content>
+                <footer>
+                    <Bar>
+                        <contentRight>
+                            <OverflowToolbar id="OverflowToolbar1">
+                                <Button icon="sap-icon://alert" iconDensityAware="true" visible="{=${message>/}.length &gt; 0}" type="Emphasized" press="onMessagePopoverPress" />
+                            </OverflowToolbar>
+                        </contentRight>
+                    </Bar>
+                </footer>
+            </Page>
+        </pages>
+    </App>
+</mvc:View>

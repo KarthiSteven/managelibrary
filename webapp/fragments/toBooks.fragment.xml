@@ -1,0 +1,54 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:form="sap.ui.layout.form"
+ xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+<Table id="iBooksList"  noDataText="No Books Under the Selected Author" 
+		headerText="Books and Copies" items="{author_to_copies}" width="auto"  contextualWidth="Auto">
+	
+		<columns>
+			<Column hAlign="Center">
+				<Text text="AccessionNumber" width="100%"/>
+			</Column>
+			<Column hAlign="Center">
+				<Text text="copies"/>
+			</Column>
+			<Column hAlign="Center">
+				<Text text="IsbnNumber"/>
+			</Column>
+			<Column hAlign="Center">
+				<Text text="BookName"/>
+			</Column>
+			<Column hAlign="Center">
+				<Text text="AuthorId"/>
+			</Column>
+			<Column hAlign="Center">
+				<Text text="AuthorName"/>
+			</Column>
+			<Column hAlign="Center">
+				<Text text="Category"/>
+			</Column>
+			<Column hAlign="Center">
+				<Text text="Valid From"/>
+			</Column>
+			<Column hAlign="Center">
+				<Text text="Publication"/>
+			</Column>
+			<Column hAlign="Center">
+				<Text text="PublicationDate"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem vAlign="Middle">
+				<cells>
+					<Text text="{AccessionNumber}" width="110%"/>
+					<Text text="{copies}"/>
+					<Text text="{IsbnNumber}"/>
+					<Text text="{BookName}"/>
+					<Text text="{AuthorId}"/>
+					<Text text="{AuthorName}"/>
+					<Text text="{Category}"/>
+					<Text text="{Publication}"/>
+					<Text text="{PublicationDate}"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

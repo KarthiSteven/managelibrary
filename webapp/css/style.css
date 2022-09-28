@@ -1,0 +1,18 @@
+.customHeightInput.sapMInputBaseContentWrapper{
+    height: 5rem !important;
+    }
+    .customHeightInput .sapMInputBase{
+    height: 5rem !important;
+    }/* Enter your custom styles here */
+
+    .sapUiBtnS1 {
+     
+        height: 5rem !important;
+        font-size: 12px;
+        }
+
+        .sapUiBtnS {
+     
+            height: 4rem !important;
+            font-size: 12px;
+            }
