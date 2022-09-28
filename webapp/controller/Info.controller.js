@@ -1,9 +1,10 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     'sap/ui/core/Fragment',
-    "sap/m/MessageBox"
+    "sap/m/MessageBox",
+    "sap/ui/model/json/JSONModel"
 
-], function (Controller, Fragment, MessageBox) {
+], function (Controller, Fragment, MessageBox, JSONModel) {
     "use strict";
 
     return Controller.extend("authorMaster.library.controller.Info", {
@@ -17,13 +18,16 @@ sap.ui.define([
             this.MessageManager.registerObject(this.getView(), true);
             this.Router = sap.ui.core.UIComponent.getRouterFor(this);
             this.Router.attachRouteMatched(this._onObjectMatched, this);
-
         },
         _onObjectMatched: function (oEvent) {
             sap.ui.getCore().getMessageManager().removeAllMessages();
             var sServiceUrl = this.getView().getModel().sServiceUrl;
             this.oModel = new sap.ui.model.odata.ODataModel(sServiceUrl, true);
             this.AuthorId = oEvent.getParameter("arguments").Author;
+            this._onProcess();
+        },
+        _onProcess: function name(params) {
+
             this.sPath = "/AuthorSet('" + this.AuthorId + "')";
             var oView = this.getView();
 
@@ -35,22 +39,39 @@ sap.ui.define([
             var oContext = new sap.ui.model.Context(oModel, this.sPath);
             this.oSection.setBindingContext(oContext);
 
-            this.onHandleCancel();
+            var oVisibilityModel = new JSONModel({
+                dobDisplay: true,
+                dobEdit: false,
+                save: false,
+                edit: true,
+                cancel: false,
+                Delete: false,
+                descDisplay: true,
+                descEdit: false,
+                ratings: false
+            });
 
+            this.getView().setModel(oVisibilityModel, "visibility")
         },
 
         onHandleEdit: function (oEvent) {
-            this.byId("iDobD").setVisible(false);
-            this.byId("iDobE").setVisible(true);
-            this.byId("iRating").setEditable(true);
-            this.byId("iDesD").setVisible(false);
-            this.byId("iDesE").setVisible(true);
+            debugger;
+            var oModel = this.getView().getModel("visibility");
+            var oTempModel = oModel.getData();
+            oTempModel.dobDisplay = false,
+                oTempModel.dobEdit = true,
+                oTempModel.save = true,
+                oTempModel.edit = false,
+                oTempModel.cancel = true,
+                oTempModel.Delete = true,
+                oTempModel.descDisplay = false,
+                oTempModel.descEdit = true,
+
+                this.byId("iRating").setEditable(true);
+
+            this.getView().getModel("visibility").setData(oTempModel);
+
             this.byId("sSimpleForm").setEditable(true);
-
-            this._toggleButtonsAndView(true);
-
-
-
         },
 
         onMessagePopoverPress: function (oEvent) {
@@ -74,8 +95,7 @@ sap.ui.define([
             }
             return this._pMessagePopover;
         },
-
-        _toggleButtonsAndView: function (bEdit) {
+        onHandleSave: function () {
 
             this.State = new sap.ui.model.json.JSONModel({
                 AuthorName: "None",
@@ -84,28 +104,14 @@ sap.ui.define([
                 Description: "None"
 
             });
+
             this.getView().setModel(this.State, "State");
-
-
-            var oView = this.getView();
-            debugger;
-            // Show the appropriate action buttons
-            oView.byId("edit").setVisible(!bEdit);
-            oView.byId("save").setVisible(bEdit);
-            oView.byId("cancel").setVisible(bEdit);
-
-
-        },
-        onHandleSave: function () {
 
             this.oData = this.getView().getBindingContext().getObject();
             this.oData.DateOfBirth = this.byId("iDobE").getValue() + 'T00:00:00';
             this.oData.Ratings = this.byId("iRating").getValue()
             this.oData.Ratings = this.oData.Ratings.toString();
             this.oData.Description = this.byId("iDesE").getValue();
-
-
-
 
             var oError;
             var vAuthor = this.byId("iAuthor").getValue();
@@ -146,23 +152,14 @@ sap.ui.define([
                     title: "Warning",
                     actions: [sap.m.MessageBox.Action.OK, sap.m.MessageBox.Action.CANCEL],
                     emphasizedAction: sap.m.MessageBox.Action.OK,
-
-
                     onClose: function (oAction) {
 
                         if (oAction === "OK") {
                             that._Update();
                         }
-
-
                     }
                 })
-
-                this.onHandleCancel();
             }
-       
-
-
         },
         _Update: function () {
             debugger;
@@ -176,8 +173,6 @@ sap.ui.define([
                             title: "Success"
                         }
                     )
-
-
                 },
                 error: function (err) {
                     MessageBox.error("Error while Creating the Record.  Please check the Alert ");
@@ -185,31 +180,28 @@ sap.ui.define([
                     $(err.response.body).find('message').first().text();
                 }
             });
-
-            this.oModel.refresh();
-
+            oModel.refresh();
+            this.onHandleCancel();
         },
 
         onHandleCancel: function () {
-            this.byId("iDobD").setVisible(true);
-            this.byId("iDobE").setVisible(false);
+            var oModel = this.getView().getModel("visibility");
+            var oTempModel = oModel.getData();
+
+            oTempModel.dobDisplay = true,
+                oTempModel.dobEdit = false,
+                oTempModel.save = false,
+                oTempModel.edit = true,
+                oTempModel.cancel = false,
+                oTempModel.Delete = false,
+                oTempModel.descDisplay = true,
+                oTempModel.descEdit = false;
             this.byId("iRating").setEditable(false);
-            this.byId("iDesD").setVisible(true);
-            this.byId("iDesE").setVisible(false);
-
+            this.getView().getModel().refresh(true);
+            this._onProcess();
+            this.getView().getModel("visibility").setData(oTempModel);
             this.byId("sSimpleForm").setEditable(false);
-
-            this._toggleButtonsAndView(false);
         },
-        _editAndDispaly: function (display) {
-
-            this.byId("iDobE").setVisible(!display);
-            this.byId("iDesE").setVisible(!display);
-            this.byId("iDobD").setVisible(display);
-            this.byId("iDesD").setVisible(display);
-
-        },
-
         onHandleDelete: function () {
             var that = this;
             MessageBox.show("Deleting the author, Which includes deleting all the author relted information in the library",
@@ -224,12 +216,9 @@ sap.ui.define([
                         if (oAction === "OK") {
                             that.onDelete();
                         }
-
-
                     }
                 })
         },
-
         onDelete: function () {
             var that = this;
             this.getView().getModel().
@@ -243,28 +232,18 @@ sap.ui.define([
                                 title: "Success",
                                 actions: [MessageBox.Action.OK],
                                 emphasizedAction: MessageBox.Action.OK,
-
-
                                 onClose: function (oAction) {
-
-
                                     that.Router.navTo("Master");
-
                                 }
                             })
-
                     },
                     error: function (err) {
                         MessageBox.error("Error while Creating the Record.  Please check the Alert ");
-
                         $(err.response.body).find('message').first().text();
                     }
                 });
 
-         
-
+            this.onHandleCancel();
         }
-
-
     });
 });
